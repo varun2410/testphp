@@ -1,0 +1,15 @@
+diff --git a/src/AppBundle/Factory/DinosaurFactory.php b/src/AppBundle/Factory/DinosaurFactory.php
+index cfd3283..b5ca644 100644
+--- a/src/AppBundle/Factory/DinosaurFactory.php
++++ b/src/AppBundle/Factory/DinosaurFactory.php
+@@ -22,6 +22,10 @@ class DinosaurFactory
+             $length = random_int(Dinosaur::LARGE, 100);
+         }
+ 
++        if (stripos($specification, 'carnivorous') !== false) {
++            $isCarnivorous = true;
++        }
++
+         $dinosaur = $this->createDinosaur($codeName, $isCarnivorous, $length);
+ 
+         return $dinosaur;

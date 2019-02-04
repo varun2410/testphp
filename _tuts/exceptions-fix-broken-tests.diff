@@ -1,0 +1,63 @@
+diff --git a/src/AppBundle/Entity/Enclosure.php b/src/AppBundle/Entity/Enclosure.php
+index f840b0d..e848be7 100644
+--- a/src/AppBundle/Entity/Enclosure.php
++++ b/src/AppBundle/Entity/Enclosure.php
+@@ -26,10 +26,14 @@ class Enclosure
+      */
+     private $securities;
+ 
+-    public function __construct()
++    public function __construct(bool $withBasicSecurity = false)
+     {
+         $this->dinosaurs = new ArrayCollection();
+         $this->securities = new ArrayCollection();
++
++        if ($withBasicSecurity) {
++            $this->addSecurity(new Security('Fence', true, $this));
++        }
+     }
+ 
+     public function getDinosaurs(): Collection
+@@ -50,6 +54,11 @@ class Enclosure
+         $this->dinosaurs[] = $dinosaur;
+     }
+ 
++    public function addSecurity(Security $security)
++    {
++        $this->securities[] = $security;
++    }
++
+     private function canAddDinosaur(Dinosaur $dinosaur): bool
+     {
+         return count($this->dinosaurs) === 0
+diff --git a/tests/AppBundle/Entity/EnclosureTest.php b/tests/AppBundle/Entity/EnclosureTest.php
+index 04d6542..bbc2c76 100644
+--- a/tests/AppBundle/Entity/EnclosureTest.php
++++ b/tests/AppBundle/Entity/EnclosureTest.php
+@@ -19,7 +19,7 @@ class EnclosureTest extends TestCase
+ 
+     public function testItAddsDinosaurs()
+     {
+-        $enclosure = new Enclosure();
++        $enclosure = new Enclosure(true);
+ 
+         $enclosure->addDinosaur(new Dinosaur());
+         $enclosure->addDinosaur(new Dinosaur());
+@@ -29,7 +29,7 @@ class EnclosureTest extends TestCase
+ 
+     public function testItDoesNotAllowCarnivorousDinosToMixWithHerbivores()
+     {
+-        $enclosure = new Enclosure();
++        $enclosure = new Enclosure(true);
+ 
+         $enclosure->addDinosaur(new Dinosaur());
+ 
+@@ -43,7 +43,7 @@ class EnclosureTest extends TestCase
+      */
+     public function testItDoesNotAllowToAddNonCarnivorousDinosaursToCarnivorousEnclosure()
+     {
+-        $enclosure = new Enclosure();
++        $enclosure = new Enclosure(true);
+ 
+         $enclosure->addDinosaur(new Dinosaur('Velociraptor', true));
+         $enclosure->addDinosaur(new Dinosaur());

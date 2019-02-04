@@ -1,0 +1,20 @@
+diff --git a/tests/AppBundle/Factory/DinosaurFactoryTest.php b/tests/AppBundle/Factory/DinosaurFactoryTest.php
+index d04ff56..e75a67d 100644
+--- a/tests/AppBundle/Factory/DinosaurFactoryTest.php
++++ b/tests/AppBundle/Factory/DinosaurFactoryTest.php
+@@ -32,4 +32,15 @@ class DinosaurFactoryTest extends TestCase
+     {
+         $this->markTestIncomplete('Waiting for confirmation from GenLab');
+     }
++
++    public function testItGrowsABabyVelociraptor()
++    {
++        if (!class_exists('Nanny')) {
++            $this->markTestSkipped('There is nobody to watch the baby!');
++        }
++
++        $dinosaur = $this->factory->growVelociraptor(1);
++
++        $this->assertSame(1, $dinosaur->getLength());
++    }
+ }

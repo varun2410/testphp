@@ -1,0 +1,19 @@
+diff --git a/src/AppBundle/Factory/DinosaurFactory.php b/src/AppBundle/Factory/DinosaurFactory.php
+index 3293499..e06fd88 100644
+--- a/src/AppBundle/Factory/DinosaurFactory.php
++++ b/src/AppBundle/Factory/DinosaurFactory.php
+@@ -22,6 +22,14 @@ class DinosaurFactory
+             $length = random_int(Dinosaur::HUGE, 100);
+         }
+ 
++        if (stripos($specification, 'OMG') !== false) {
++            $length = random_int(Dinosaur::HUGE, 100);
++        }
++
++        if (strpos($specification, '😱') !== false) {
++            $length = random_int(Dinosaur::HUGE, 100);
++        }
++
+         if (stripos($specification, 'large') !== false) {
+             $length = random_int(Dinosaur::LARGE, Dinosaur::HUGE - 1);
+         }

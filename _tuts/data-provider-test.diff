@@ -1,0 +1,56 @@
+diff --git a/src/AppBundle/Entity/Dinosaur.php b/src/AppBundle/Entity/Dinosaur.php
+index 146551d..8837260 100644
+--- a/src/AppBundle/Entity/Dinosaur.php
++++ b/src/AppBundle/Entity/Dinosaur.php
+@@ -10,6 +10,8 @@ use Doctrine\ORM\Mapping as ORM;
+  */
+ class Dinosaur
+ {
++    const LARGE = 20;
++
+     /**
+      * @ORM\Column(type="integer")
+      */
+@@ -57,4 +59,9 @@ class Dinosaur
+     {
+         return $this->genus;
+     }
++
++    public function isCarnivorous(): bool
++    {
++        return $this->isCarnivorous;
++    }
+ }
+diff --git a/src/AppBundle/Factory/DinosaurFactory.php b/src/AppBundle/Factory/DinosaurFactory.php
+index ddcd667..601ca99 100644
+--- a/src/AppBundle/Factory/DinosaurFactory.php
++++ b/src/AppBundle/Factory/DinosaurFactory.php
+@@ -11,6 +11,10 @@ class DinosaurFactory
+         return $this->createDinosaur('Velociraptor', true, $length);
+     }
+ 
++    public function growFromSpecification(string $specification): Dinosaur
++    {
++    }
++
+     private function createDinosaur(string $genus, bool $isCarnivorous, int $length): Dinosaur
+     {
+         $dinosaur = new Dinosaur($genus, $isCarnivorous);
+diff --git a/tests/AppBundle/Factory/DinosaurFactoryTest.php b/tests/AppBundle/Factory/DinosaurFactoryTest.php
+index e75a67d..a6c2c8d 100644
+--- a/tests/AppBundle/Factory/DinosaurFactoryTest.php
++++ b/tests/AppBundle/Factory/DinosaurFactoryTest.php
+@@ -43,4 +43,13 @@ class DinosaurFactoryTest extends TestCase
+ 
+         $this->assertSame(1, $dinosaur->getLength());
+     }
++
++    public function testItGrowsADinosaurFromSpecification()
++    {
++        $dinosaur = $this->factory->growFromSpecification('large carnivorous dinosaur');
++
++        $this->assertGreaterThanOrEqual(Dinosaur::LARGE, $dinosaur->getLength());
++
++        $this->assertTrue($dinosaur->isCarnivorous(), 'Diets do not match');
++    }
+ }

@@ -1,0 +1,37 @@
+diff --git a/src/AppBundle/Service/EnclosureBuilderService.php b/src/AppBundle/Service/EnclosureBuilderService.php
+index 2b0b485..2f7fc10 100644
+--- a/src/AppBundle/Service/EnclosureBuilderService.php
++++ b/src/AppBundle/Service/EnclosureBuilderService.php
+@@ -39,6 +39,8 @@ class EnclosureBuilderService
+ 
+         $this->addDinosaurs($numberOfDinosaurs, $enclosure);
+ 
++        $this->entityManager->persist($enclosure);
++
+         return $enclosure;
+     }
+ 
+diff --git a/tests/AppBundle/Service/EnclosureBuilderServiceTest.php b/tests/AppBundle/Service/EnclosureBuilderServiceTest.php
+index dc9dbe0..7e37c80 100644
+--- a/tests/AppBundle/Service/EnclosureBuilderServiceTest.php
++++ b/tests/AppBundle/Service/EnclosureBuilderServiceTest.php
+@@ -3,6 +3,7 @@
+ namespace Tests\AppBundle\Service;
+ 
+ use AppBundle\Entity\Dinosaur;
++use AppBundle\Entity\Enclosure;
+ use AppBundle\Factory\DinosaurFactory;
+ use AppBundle\Service\EnclosureBuilderService;
+ use Doctrine\ORM\EntityManagerInterface;
+@@ -13,6 +14,11 @@ class EnclosureBuilderServiceTest extends TestCase
+     public function testItBuildsAndPersistsEnclosure()
+     {
+         $em = $this->createMock(EntityManagerInterface::class);
++
++        $em->expects($this->once())
++            ->method('persist')
++            ->with($this->isInstanceOf(Enclosure::class));
++
+         $dinoFactory = $this->createMock(DinosaurFactory::class);
+ 
+         $dinoFactory->expects($this->exactly(2))

@@ -1,0 +1,25 @@
+diff --git a/tests/AppBundle/Service/EnclosureBuilderServiceProphecyTest.php b/tests/AppBundle/Service/EnclosureBuilderServiceProphecyTest.php
+new file mode 100644
+index 0000000..f93c3a1
+--- /dev/null
++++ b/tests/AppBundle/Service/EnclosureBuilderServiceProphecyTest.php
+@@ -0,0 +1,19 @@
++<?php
++
++namespace Tests\AppBundle\Service;
++
++use AppBundle\Entity\Dinosaur;
++use AppBundle\Entity\Enclosure;
++use AppBundle\Factory\DinosaurFactory;
++use AppBundle\Service\EnclosureBuilderService;
++use Doctrine\ORM\EntityManagerInterface;
++use PHPUnit\Framework\TestCase;
++use Prophecy\Argument;
++
++class EnclosureBuilderServiceProphecyTest extends TestCase
++{
++    public function testItBuildsAndPersistsEnclosure()
++    {
++        $em = $this->prophesize(EntityManagerInterface::class);
++    }
++}

@@ -1,0 +1,19 @@
+diff --git a/src/AppBundle/Factory/DinosaurFactory.php b/src/AppBundle/Factory/DinosaurFactory.php
+index 601ca99..321ae27 100644
+--- a/src/AppBundle/Factory/DinosaurFactory.php
++++ b/src/AppBundle/Factory/DinosaurFactory.php
+@@ -13,6 +13,14 @@ class DinosaurFactory
+ 
+     public function growFromSpecification(string $specification): Dinosaur
+     {
++        // defaults
++        $codeName = 'InG-' . random_int(1, 99999);
++        $length = random_int(1, Dinosaur::LARGE - 1);
++        $isCarnivorous = false;
++
++        $dinosaur = $this->createDinosaur($codeName, $isCarnivorous, $length);
++
++        return $dinosaur;
+     }
+ 
+     private function createDinosaur(string $genus, bool $isCarnivorous, int $length): Dinosaur

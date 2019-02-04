@@ -1,0 +1,12 @@
+diff --git a/tests/AppBundle/Service/EnclosureBuilderServiceProphecyTest.php b/tests/AppBundle/Service/EnclosureBuilderServiceProphecyTest.php
+index 890f4ce..1df492d 100644
+--- a/tests/AppBundle/Service/EnclosureBuilderServiceProphecyTest.php
++++ b/tests/AppBundle/Service/EnclosureBuilderServiceProphecyTest.php
+@@ -18,5 +18,7 @@ class EnclosureBuilderServiceProphecyTest extends TestCase
+ 
+ 	$em->persist(Argument::type(Enclosure::class))
+ 	    ->shouldBeCalledTimes(1);
++
++	$em->flush()->shouldBeCalled();
+     }
+ }
