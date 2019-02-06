@@ -37,6 +37,12 @@ class Dinosaur
     }
 
     /**
+     * @var Enclosure
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Enclosure", inversedBy="dinosaurs")
+     */
+    private $enclosure;
+
+    /**
      * @return mixed
      */
     public function getLength()
